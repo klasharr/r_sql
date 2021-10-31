@@ -5,7 +5,7 @@ SELECT
     cr.identifier as sail_number,
     s.name as series_name,
     ra.name as race_name,
-    r.elapsed_time,a
+    r.elapsed_time,
     r.corrected_time,
     r.laps,
     r.status,
