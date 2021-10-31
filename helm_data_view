@@ -1,3 +1,5 @@
+drop view if exists helm_data;
+
 create view helm_data as (SELECT 
     first_name, 
     last_name,
@@ -12,6 +14,7 @@ create view helm_data as (SELECT
     r.status,
     r.discarded,
     r.points,
+    r.id as race_id,
     e.rank as series_rank,
     e.final_score as series_score,
     ra.date,
