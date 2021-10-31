@@ -3,6 +3,7 @@ SELECT
     last_name,
     cs.name as class,
     cr.identifier as sail_number,
+    f.name as fleet_name,
     s.name as series_name,
     ra.name as race_name,
     r.elapsed_time,
@@ -21,6 +22,7 @@ SELECT
         c.id,
         cs.name,
         cr.identifier,
+        f.name,
         s.name,
         ra.name,
         r.corrected_time,
@@ -42,6 +44,7 @@ FROM `results` r
     join clubs cl on cl.id = s.club_id
     join classifications cs on cs.id = e.classification_id 
     join crafts cr on cr.id = r.craft_id
-WHERE
-	s.name = 'James Day Cup 2021'  
-ORDER BY `series_rank` ASC
+    join fleets f on f.id = e.fleet_id
+where 
+     s.name = 'Summer Sunday Series 2021' and 
+     ra.name = 'Race 2'
