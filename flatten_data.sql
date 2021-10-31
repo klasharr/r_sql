@@ -12,6 +12,7 @@ SELECT
     r.status,
     r.discarded,
     r.points,
+    r.id as race_id,
     e.rank as series_rank,
     e.final_score as series_score,
     ra.date,
