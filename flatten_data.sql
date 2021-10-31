@@ -1,7 +1,6 @@
 SELECT 
     first_name, 
     last_name,
-    'helm',
     cs.name as class,
     cr.identifier as sail_number,
     s.name as series_name,
@@ -17,7 +16,7 @@ SELECT
     md5(concat( 
         first_name, 
         last_name,
-        'helm',
+        c.id,
         cs.name,
         cr.identifier,
         s.name,
@@ -27,6 +26,7 @@ SELECT
         r.elapsed_time,
         r.discarded,
         r.points,
+        r.laps,
         ra.date,
         cl.name
         )) as row_md5
@@ -38,4 +38,5 @@ FROM `results` r
     join clubs cl on cl.id = s.club_id
     join classifications cs on cs.id = e.classification_id 
     join crafts cr on cr.id = r.craft_id
-ORDER BY date asc
+WHERE
+	s.name = 'The Opener 2021'
