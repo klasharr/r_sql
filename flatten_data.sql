@@ -47,4 +47,6 @@ FROM `results` r
     join fleets f on f.id = e.fleet_id
 where 
      s.name = 'Summer Sunday Series 2021' and 
-     ra.name = 'Race 2'
+     ra.name = 'Race 2' AND
+     f.name = 'ILCA' AND
+     r.status not in ('DNC', 'OOD')
