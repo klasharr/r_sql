@@ -5,12 +5,14 @@ SELECT
     cr.identifier as sail_number,
     s.name as series_name,
     ra.name as race_name,
-    r.elapsed_time,
+    r.elapsed_time,a
     r.corrected_time,
     r.laps,
     r.status,
     r.discarded,
     r.points,
+    e.rank as series_rank,
+    e.final_score as series_score,
     ra.date,
     cl.name as club_name,
     md5(concat( 
@@ -26,6 +28,8 @@ SELECT
         r.elapsed_time,
         r.discarded,
         r.points,
+        e.rank,
+        e.final_score,
         r.laps,
         ra.date,
         cl.name
@@ -39,4 +43,5 @@ FROM `results` r
     join classifications cs on cs.id = e.classification_id 
     join crafts cr on cr.id = r.craft_id
 WHERE
-	s.name = 'The Opener 2021'
+	s.name = 'James Day Cup 2021'  
+ORDER BY `series_rank` ASC
