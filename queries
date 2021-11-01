@@ -35,38 +35,37 @@ ORDER BY
  SELECT distinct(status), count(*) FROM `helm_data` group by status 
  
  */
- 
- SELECT DISTINCT
+ SELECT 
     series_name AS `Series Name`,
     DATE AS `Date`,
-    COUNT(*) AS `Total Num Helms`,
+    COUNT( distinct( name )) AS `Total Num Helms`,
     (
     SELECT
-        COUNT(*)
+        COUNT( distinct( h2.name ))
     FROM
         helm_data h2
     WHERE
-        h1.date = h2.date AND h2.fleet_name = 'ILCA' AND h1.series_name = h2.series_name AND
+        h2.fleet_name = 'ILCA' AND h1.series_name = h2.series_name AND
     STATUS
         NOT IN('DNC', 'OOD')
 ) AS `ILCA`,
 (
     SELECT
-        COUNT(*)
+        COUNT( distinct( h3.name ))
     FROM
         helm_data h3
     WHERE
-        h1.date = h3.date AND h3.fleet_name IN('Dart 18', 'Multihull') AND h1.series_name = h3.series_name AND
+        h3.fleet_name IN('Dart 18', 'Multihull') AND h1.series_name = h3.series_name AND
     STATUS
         NOT IN('DNC', 'OOD')
 ) AS `Dart 18`,
 (
     SELECT
-        COUNT(*)
+        COUNT( distinct( h4.name ))
     FROM
         helm_data h4
     WHERE
-        h1.date = h4.date AND h4.fleet_name IN('Monohull', 'Handicap') AND h1.series_name = h4.series_name AND
+        h4.fleet_name IN('Monohull', 'Handicap') AND h1.series_name = h4.series_name AND
     STATUS
         NOT IN('DNC', 'OOD')
 ) AS `Handicap`
@@ -76,7 +75,6 @@ WHERE
 STATUS
     NOT IN('DNC', 'OOD')
 GROUP BY
-    DATE,
     series_name
 ORDER BY
     DATE
