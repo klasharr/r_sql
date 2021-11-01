@@ -1,0 +1,83 @@
+
+/* 
+Helm counts per series. Series is defined as actual series and also cup race
+
+NOTE 1: Not sure what the STATIC status is, see:
+ 
+SELECT distinct(status), count(*) FROM `helm_data` group by status 
+
+*/
+
+SELECT DISTINCT
+    series_name,
+    DATE,
+    count(*) as num_helms
+FROM
+    `helm_data`
+WHERE status not in( 'DNC', 'OOD' )
+GROUP BY
+    DATE,
+    series_name
+ORDER BY
+    DATE
+    
+    
+ /*
+ Helm counts per series and fleet
+ 
+ NOTE 1: there is ambiguity in the data with fleet names, run this query to see:
+ 
+ SELECT distinct(fleet_name), count(*) FROM `helm_data` group by fleet_name
+ hence the NOT IN.
+ 
+ NOTE 2: Not sure what the STATIC status is, see:
+ 
+ SELECT distinct(status), count(*) FROM `helm_data` group by status 
+ 
+ */
+ 
+ SELECT DISTINCT
+    series_name AS `Series Name`,
+    DATE AS `Date`,
+    COUNT(*) AS `Total Num Helms`,
+    (
+    SELECT
+        COUNT(*)
+    FROM
+        helm_data h2
+    WHERE
+        h1.date = h2.date AND h2.fleet_name = 'ILCA' AND h1.series_name = h2.series_name AND
+    STATUS
+        NOT IN('DNC', 'OOD')
+) AS `ILCA`,
+(
+    SELECT
+        COUNT(*)
+    FROM
+        helm_data h3
+    WHERE
+        h1.date = h3.date AND h3.fleet_name IN('Dart 18', 'Multihull') AND h1.series_name = h3.series_name AND
+    STATUS
+        NOT IN('DNC', 'OOD')
+) AS `Dart 18`,
+(
+    SELECT
+        COUNT(*)
+    FROM
+        helm_data h4
+    WHERE
+        h1.date = h4.date AND h4.fleet_name IN('Monohull', 'Handicap') AND h1.series_name = h4.series_name AND
+    STATUS
+        NOT IN('DNC', 'OOD')
+) AS `Handicap`
+FROM
+    `helm_data` h1
+WHERE
+STATUS
+    NOT IN('DNC', 'OOD')
+GROUP BY
+    DATE,
+    series_name
+ORDER BY
+    DATE
+LIMIT 100
