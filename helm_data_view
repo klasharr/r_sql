@@ -1,15 +1,16 @@
-drop view if exists helm_data;
+drop view helm_data;
 
 CREATE VIEW `helm_data` AS(
     SELECT
-        `c`.`first_name` AS `first_name`,
-        `c`.`last_name` AS `last_name`,
-        CONCAT(`c`.`first_name`, `c`.`last_name`) AS `name`,
-        `cs`.`name` AS `class`,
-        `cr`.`identifier` AS `sail_number`,
+        `ra`.`date` AS `date`,
         `f`.`name` AS `fleet_name`,
         `s`.`name` AS `series_name`,
         `ra`.`name` AS `race_name`,
+        `c`.`first_name` AS `first_name`,
+        `c`.`last_name` AS `last_name`,
+        CONCAT(`c`.`first_name`, " ",  `c`.`last_name`) AS `name`,
+        `cs`.`name` AS `class`,
+        `cr`.`identifier` AS `sail_number`,
         `r`.`elapsed_time` AS `elapsed_time`,
         `r`.`corrected_time` AS `corrected_time`,
         `r`.`laps` AS `laps`,
@@ -19,7 +20,7 @@ CREATE VIEW `helm_data` AS(
         `r`.`id` AS `race_id`,
         `e`.`rank` AS `series_rank`,
         `e`.`final_score` AS `series_score`,
-        `ra`.`date` AS `date`,
+        
         `cl`.`name` AS `club_name`
     FROM
         (
