@@ -1,3 +1,5 @@
+# This only de-dupes cup and series races that were combined
+
 SELECT
     *
 FROM
