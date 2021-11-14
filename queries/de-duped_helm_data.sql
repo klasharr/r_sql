@@ -1,4 +1,4 @@
-# This only de-dupes cup and series races that were combined
+# This only de-dupes cup and series races that were combined in 2021
 
 SELECT
     *
