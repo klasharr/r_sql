@@ -11,4 +11,4 @@ GROUP BY
     series_name,
     race_name, 
     fleet_name 
-ORDER BY `count`  DESC LIMIT 100
+ORDER BY `count`  DESC LIMIT 200;
