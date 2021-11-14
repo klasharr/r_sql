@@ -5,7 +5,7 @@ SELECT
         race_name,
         COUNT(*) as count
     FROM
-        `helm_data_table`
+        `helm_data_temp_table`
     WHERE status not in ('DNC','OOD') 
 GROUP BY
     series_name,
